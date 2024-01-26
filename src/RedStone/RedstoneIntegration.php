@@ -1,6 +1,6 @@
 <?php
 
-namespace YourNamespace;
+namespace RedStone;
 
 use pocketmine\plugin\PluginBase;
 use pocketmine\event\Listener;
