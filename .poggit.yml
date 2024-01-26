@@ -1,0 +1,8 @@
+--- # Poggit-CI Manifest. Open the CI at https://poggit.pmmp.io/ci/BajanVlogs/RedStonePMMP
+build-by-default: true
+branches:
+- master
+projects:
+  RedStonePMMP:
+    path: ""
+...
