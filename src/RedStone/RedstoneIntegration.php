@@ -13,7 +13,6 @@ class RedstoneIntegration extends PluginBase implements Listener {
 
     public function onEnable(): void {
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
-        Block::registerBlock(new CustomRedstone(), true);
     }
 
     public function onRedstonePlace(BlockPlaceEvent $event) {
@@ -59,20 +58,5 @@ class RedstoneIntegration extends PluginBase implements Listener {
             // Activate the redstone component
             $level->setBlock(new Vector3($x, $y, $z), $block->setActivated(true));
         }
-    }
-}
-
-class CustomRedstone extends Block {
-    protected $id = Block::REDSTONE_BLOCK;
-
-    public function getName(): string {
-        return "Custom Redstone Block";
-    }
-
-    public function setActivated(bool $activated) {
-        // Implement your custom redstone logic here
-        // This example sets the block to be powered or unpowered based on the activation status
-        $this->meta = $activated ? 15 : 0;
-        return $this;
     }
 }
