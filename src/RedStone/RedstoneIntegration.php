@@ -17,16 +17,15 @@ class RedstoneIntegration extends PluginBase implements Listener {
 
     public function onRedstonePlace(BlockPlaceEvent $event) {
         // Handle redstone block placement here
-        $block = $event->getBlock();
-        $player = $event->getPlayer();
+        $placedBlock = $event->getBlock(); // Use getBlock() directly
 
         // Your custom redstone placement logic goes here
 
         // Example: Activate adjacent redstone components
-        $this->activateAdjacentRedstone($block);
+        $this->activateAdjacentRedstone($placedBlock);
 
         // Broadcast a message
-        $player->sendMessage("Custom Redstone Block placed!");
+        $event->getPlayer()->sendMessage("Custom Redstone Block placed!");
     }
 
     private function activateAdjacentRedstone(Block $block) {
