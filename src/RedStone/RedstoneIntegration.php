@@ -12,7 +12,7 @@ use pocketmine\math\Vector3;
 
 class RedstoneIntegration extends PluginBase implements Listener {
 
-    public function onEnable() {
+    public function onEnable(): void {
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
         BlockFactory::registerBlock(new CustomRedstone(), true);
     }
