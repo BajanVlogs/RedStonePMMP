@@ -34,7 +34,7 @@ class RedstoneIntegration extends PluginBase implements Listener {
         $y = $block->getY();
         $z = $block->getZ();
 
-        // Activate adjacent redstone components
+        // Activate adjacent redstone components using getBlockAgainst
         $this->activateRedstoneAt($level, $x + 1, $y, $z);
         $this->activateRedstoneAt($level, $x - 1, $y, $z);
         $this->activateRedstoneAt($level, $x, $y + 1, $z);
@@ -44,7 +44,7 @@ class RedstoneIntegration extends PluginBase implements Listener {
     }
 
     private function activateRedstoneAt(Level $level, $x, $y, $z) {
-        $block = $level->getBlock(new Vector3($x, $y, $z));
+        $block = $level->getBlockAgainst(new Vector3($x, $y, $z));
 
         // Check if the block is redstone-related (e.g., redstone dust, torch, repeater)
         if ($block->getId() === Block::REDSTONE_WIRE ||
@@ -59,3 +59,4 @@ class RedstoneIntegration extends PluginBase implements Listener {
         }
     }
 }
+
