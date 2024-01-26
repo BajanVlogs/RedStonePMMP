@@ -77,3 +77,4 @@ class CustomRedstone extends Block {
         return $this;
     }
 }
+
