@@ -1,5 +1,5 @@
-name: Redstone
-version: 1.0.0
+name: RedStone
+main: RedStone\RedstoneIntegration
 api: 5.0.0
-description: Adds redstone functionality to PocketMine
+version: 0.0.1
 author: BajanVlogs
