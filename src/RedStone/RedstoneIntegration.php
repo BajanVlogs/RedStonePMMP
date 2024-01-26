@@ -6,7 +6,7 @@ use pocketmine\plugin\PluginBase;
 use pocketmine\event\Listener;
 use pocketmine\event\block\BlockPlaceEvent;
 use pocketmine\block\Block;
-use pocketmine\block\BlockFactory;
+use pocketmine\block\BlockFactory as BlockFactoryPM;
 use pocketmine\level\Level;
 use pocketmine\math\Vector3;
 
@@ -14,7 +14,7 @@ class RedstoneIntegration extends PluginBase implements Listener {
 
     public function onEnable(): void {
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
-        BlockFactory::registerBlock(new CustomRedstone(), true);
+        BlockFactoryPM::registerBlock(new CustomRedstone(), true);
     }
 
     public function onRedstonePlace(BlockPlaceEvent $event) {
