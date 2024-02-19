@@ -1,5 +1,3 @@
-<?php
-
 namespace RedStone;
 
 use pocketmine\plugin\PluginBase;
@@ -17,7 +15,7 @@ class RedstoneIntegration extends PluginBase implements Listener {
 
     public function onRedstonePlace(BlockPlaceEvent $event) {
         // Handle redstone block placement here
-        $placedBlock = $event->getBlock(); // Use getBlock() directly
+        $placedBlock = $event->getBlock()->getBlock(); // Use getBlock() directly
 
         // Your custom redstone placement logic goes here
 
@@ -44,7 +42,7 @@ class RedstoneIntegration extends PluginBase implements Listener {
     }
 
     private function activateRedstoneAt(Level $level, $x, $y, $z) {
-        $block = $level->getBlockAgainst(new Vector3($x, $y, $z));
+        $block = $level->getBlock(new Vector3($x, $y, $z));
 
         // Check if the block is redstone-related (e.g., redstone dust, torch, repeater)
         if ($block->getId() === Block::REDSTONE_WIRE ||
@@ -59,4 +57,3 @@ class RedstoneIntegration extends PluginBase implements Listener {
         }
     }
 }
-
