@@ -1,3 +1,6 @@
+<?php
+
+
 namespace RedStone;
 
 use pocketmine\plugin\PluginBase;
