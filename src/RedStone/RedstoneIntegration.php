@@ -1,14 +1,13 @@
 <?php
 
-
 namespace RedStone;
 
-use pocketmine\plugin\PluginBase;
-use pocketmine\event\Listener;
-use pocketmine\event\block\BlockPlaceEvent;
 use pocketmine\block\Block;
+use pocketmine\event\block\BlockPlaceEvent;
+use pocketmine\event\Listener;
 use pocketmine\level\Level;
 use pocketmine\math\Vector3;
+use pocketmine\plugin\PluginBase;
 
 class RedstoneIntegration extends PluginBase implements Listener {
 
@@ -16,9 +15,9 @@ class RedstoneIntegration extends PluginBase implements Listener {
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
     }
 
-    public function onRedstonePlace(BlockPlaceEvent $event) {
+    public function onRedstonePlace(BlockPlaceEvent $event): void {
         // Handle redstone block placement here
-        $placedBlock = $event->getBlock()->getBlock(); // Use getBlock() directly
+        $placedBlock = $event->getBlock();
 
         // Your custom redstone placement logic goes here
 
@@ -29,13 +28,13 @@ class RedstoneIntegration extends PluginBase implements Listener {
         $event->getPlayer()->sendMessage("Custom Redstone Block placed!");
     }
 
-    private function activateAdjacentRedstone(Block $block) {
+    private function activateAdjacentRedstone(Block $block): void {
         $level = $block->getLevel();
         $x = $block->getX();
         $y = $block->getY();
         $z = $block->getZ();
 
-        // Activate adjacent redstone components using getBlockAgainst
+        // Activate adjacent redstone components
         $this->activateRedstoneAt($level, $x + 1, $y, $z);
         $this->activateRedstoneAt($level, $x - 1, $y, $z);
         $this->activateRedstoneAt($level, $x, $y + 1, $z);
@@ -44,17 +43,18 @@ class RedstoneIntegration extends PluginBase implements Listener {
         $this->activateRedstoneAt($level, $x, $y, $z - 1);
     }
 
-    private function activateRedstoneAt(Level $level, $x, $y, $z) {
+    private function activateRedstoneAt(Level $level, int $x, int $y, int $z): void {
         $block = $level->getBlock(new Vector3($x, $y, $z));
 
         // Check if the block is redstone-related (e.g., redstone dust, torch, repeater)
-        if ($block->getId() === Block::REDSTONE_WIRE ||
-            $block->getId() === Block::REDSTONE_TORCH_OFF ||
-            $block->getId() === Block::REDSTONE_TORCH_ON ||
-            $block->getId() === Block::REDSTONE_REPEATER_OFF ||
-            $block->getId() === Block::REDSTONE_REPEATER_ON ||
-            $block->getId() === Block::REDSTONE_BLOCK) {
-
+        if (in_array($block->getId(), [
+            Block::REDSTONE_WIRE,
+            Block::REDSTONE_TORCH_OFF,
+            Block::REDSTONE_TORCH_ON,
+            Block::REDSTONE_REPEATER_OFF,
+            Block::REDSTONE_REPEATER_ON,
+            Block::REDSTONE_BLOCK
+        ])) {
             // Activate the redstone component
             $level->setBlock(new Vector3($x, $y, $z), $block->setActivated(true));
         }
