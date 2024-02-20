@@ -5,7 +5,6 @@ namespace RedStone;
 use pocketmine\block\Block;
 use pocketmine\event\block\BlockPlaceEvent;
 use pocketmine\event\Listener;
-use pocketmine\level\Level;
 use pocketmine\math\Vector3;
 use pocketmine\plugin\PluginBase;
 
@@ -17,7 +16,7 @@ class RedstoneIntegration extends PluginBase implements Listener {
 
     public function onRedstonePlace(BlockPlaceEvent $event): void {
         // Handle redstone block placement here
-        $placedBlock = $event->getBlock();
+        $placedBlock = $event->getBlock(); // Get the placed block from the event
 
         // Your custom redstone placement logic goes here
 
@@ -43,19 +42,20 @@ class RedstoneIntegration extends PluginBase implements Listener {
         $this->activateRedstoneAt($level, $x, $y, $z - 1);
     }
 
-    private function activateRedstoneAt(Level $level, int $x, int $y, int $z): void {
-        $block = $level->getBlock(new Vector3($x, $y, $z));
+    private function activateRedstoneAt($level, $x, $y, $z): void {
+        $block = $level->getBlock(new Vector3($x, $y, $z)); // Get the block at the specified coordinates
 
         // Check if the block is redstone-related (e.g., redstone dust, torch, repeater)
         if (in_array($block->getId(), [
             Block::REDSTONE_WIRE,
-            Block::REDSTONE_TORCH,
-            Block::REDSTONE_BLOCK,
-            Block::REDSTONE_REPEATER
+            Block::REDSTONE_TORCH_OFF,
+            Block::REDSTONE_TORCH_ON,
+            Block::REDSTONE_REPEATER_OFF,
+            Block::REDSTONE_REPEATER_ON,
+            Block::REDSTONE_BLOCK
         ])) {
             // Activate the redstone component
-            $block->setActivated(true);
-            $level->setBlock(new Vector3($x, $y, $z), $block);
+            $level->setBlock(new Vector3($x, $y, $z), $block->setActivated(true));
         }
     }
 }
