@@ -49,14 +49,13 @@ class RedstoneIntegration extends PluginBase implements Listener {
         // Check if the block is redstone-related (e.g., redstone dust, torch, repeater)
         if (in_array($block->getId(), [
             Block::REDSTONE_WIRE,
-            Block::REDSTONE_TORCH_OFF,
-            Block::REDSTONE_TORCH_ON,
-            Block::REDSTONE_REPEATER_OFF,
-            Block::REDSTONE_REPEATER_ON,
-            Block::REDSTONE_BLOCK
+            Block::REDSTONE_TORCH,
+            Block::REDSTONE_BLOCK,
+            Block::REDSTONE_REPEATER
         ])) {
             // Activate the redstone component
-            $level->setBlock(new Vector3($x, $y, $z), $block->setActivated(true));
+            $block->setActivated(true);
+            $level->setBlock(new Vector3($x, $y, $z), $block);
         }
     }
 }
