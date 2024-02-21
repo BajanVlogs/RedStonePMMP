@@ -45,7 +45,7 @@ class RedstoneIntegration extends PluginBase implements Listener {
     /**
      * Activate redstone at given coordinates.
      *
-     * @param mixed $level
+     * @param mixed $world
      * @param int   $x
      * @param int   $y
      * @param int   $z
