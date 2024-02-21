@@ -28,18 +28,18 @@ class RedstoneIntegration extends PluginBase implements Listener {
      * @param Block $block
      */
     public function handleRedstoneActivation(Block $block): void {
-        $level = $block->getWorld();
+        $world = $block->getLevel();
         $x = $block->getX();
         $y = $block->getY();
         $z = $block->getZ();
 
         // Activate adjacent redstone components
-        $this->activateRedstoneAt($level, $x + 1, $y, $z);
-        $this->activateRedstoneAt($level, $x - 1, $y, $z);
-        $this->activateRedstoneAt($level, $x, $y + 1, $z);
-        $this->activateRedstoneAt($level, $x, $y - 1, $z);
-        $this->activateRedstoneAt($level, $x, $y, $z + 1);
-        $this->activateRedstoneAt($level, $x, $y, $z - 1);
+        $this->activateRedstoneAt($world, $x + 1, $y, $z);
+        $this->activateRedstoneAt($world, $x - 1, $y, $z);
+        $this->activateRedstoneAt($world, $x, $y + 1, $z);
+        $this->activateRedstoneAt($world, $x, $y - 1, $z);
+        $this->activateRedstoneAt($world, $x, $y, $z + 1);
+        $this->activateRedstoneAt($world, $x, $y, $z - 1);
     }
 
     /**
@@ -50,8 +50,8 @@ class RedstoneIntegration extends PluginBase implements Listener {
      * @param int   $y
      * @param int   $z
      */
-    private function activateRedstoneAt($level, int $x, int $y, int $z): void {
-        $block = $level->getBlock(new Vector3($x, $y, $z)); // Get the block at the specified coordinates
+    private function activateRedstoneAt($world, int $x, int $y, int $z): void {
+        $block = $world->getBlock(new Vector3($x, $y, $z)); // Get the block at the specified coordinates
 
         // Check if the block is redstone-related (e.g., redstone dust, torch, repeater)
         if (in_array($block->getId(), [
@@ -62,7 +62,7 @@ class RedstoneIntegration extends PluginBase implements Listener {
         ])) {
             // Activate the redstone component
             $block->setActivated(true);
-            $level->setBlock(new Vector3($x, $y, $z), $block);
+            $world->setBlock(new Vector3($x, $y, $z), $block);
         }
     }
 }
