@@ -7,7 +7,7 @@ use pocketmine\event\block\BlockPlaceEvent;
 use pocketmine\event\Listener;
 use pocketmine\math\Vector3;
 
-class EventListener implements Listener {
+class RedstoneIntegration extends PluginBase implements Listener {
 
     private $plugin;
 
