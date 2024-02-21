@@ -28,7 +28,7 @@ class RedstoneIntegration extends PluginBase implements Listener {
      * @param Block $block
      */
     public function handleRedstoneActivation(Block $block): void {
-        $level = $event->getBlock()->getWorld();
+        $world = $block->getWorld();
         $x = $block->getX();
         $y = $block->getY();
         $z = $block->getZ();
