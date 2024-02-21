@@ -4,14 +4,13 @@ namespace RedStone;
 
 use pocketmine\block\Block;
 use pocketmine\event\block\BlockPlaceEvent;
-use pocketmine\event\Listener;
 use pocketmine\math\Vector3;
 use pocketmine\plugin\PluginBase;
 
-class RedstoneIntegration extends PluginBase implements Listener {
+class RedstoneIntegration extends PluginBase {
 
     public function onEnable(): void {
-        $this->getServer()->getPluginManager()->registerEvents($this, $this);
+        $this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
     }
 
     public function onRedstonePlace(BlockPlaceEvent $event): void {
@@ -48,14 +47,13 @@ class RedstoneIntegration extends PluginBase implements Listener {
         // Check if the block is redstone-related (e.g., redstone dust, torch, repeater)
         if (in_array($block->getId(), [
             Block::REDSTONE_WIRE,
-            Block::REDSTONE_TORCH_OFF,
-            Block::REDSTONE_TORCH_ON,
-            Block::REDSTONE_REPEATER_OFF,
-            Block::REDSTONE_REPEATER_ON,
+            Block::REDSTONE_TORCH,
+            Block::REDSTONE_REPEATER,
             Block::REDSTONE_BLOCK
         ])) {
             // Activate the redstone component
-            $level->setBlock(new Vector3($x, $y, $z), $block->setActivated(true));
+            $block->setActivated(true);
+            $level->setBlock(new Vector3($x, $y, $z), $block);
         }
     }
 }
