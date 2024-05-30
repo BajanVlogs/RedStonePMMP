@@ -2,24 +2,21 @@
 
 namespace RedStone;
 
-use pocketmine\block\Block;
-use pocketmine\event\block\BlockPlaceEvent;
+use pocketmine\plugin\PluginBase;
 use pocketmine\event\Listener;
-use pocketmine\math\Vector3;
+use pocketmine\Server;
 
 class RedstoneIntegration extends PluginBase implements Listener {
 
-    private $plugin;
-
-    public function __construct(RedstoneIntegration $plugin) {
-        $this->plugin = $plugin;
+    public function onEnable() {
+        $this->getServer()->getPluginManager()->registerEvents($this, $this);
     }
 
     /**
      * @param BlockPlaceEvent $event
      */
     public function onBlockPlace(BlockPlaceEvent $event): void {
-        $this->plugin->handleBlockPlacement($event);
+        $this->handleRedstoneActivation($event->getBlock());
     }
 
     /**
@@ -28,7 +25,7 @@ class RedstoneIntegration extends PluginBase implements Listener {
      * @param Block $block
      */
     public function handleRedstoneActivation(Block $block): void {
-        $world = $block->getWorld();
+        $world = $block->getLevel();
         $x = $block->getX();
         $y = $block->getY();
         $z = $block->getZ();
