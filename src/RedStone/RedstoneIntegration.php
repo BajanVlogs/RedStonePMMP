@@ -4,11 +4,13 @@ namespace RedStone;
 
 use pocketmine\plugin\PluginBase;
 use pocketmine\event\Listener;
-use pocketmine\Server;
+use pocketmine\event\block\BlockPlaceEvent;
+use pocketmine\block\Block;
+use pocketmine\math\Vector3;
 
 class RedstoneIntegration extends PluginBase implements Listener {
 
-    public function onEnable() {
+    public function onEnable(): void {
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
     }
 
@@ -26,9 +28,9 @@ class RedstoneIntegration extends PluginBase implements Listener {
      */
     public function handleRedstoneActivation(Block $block): void {
         $world = $block->getLevel();
-        $x = $block->getX();
-        $y = $block->getY();
-        $z = $block->getZ();
+        $x = $block->getPosition()->getX();
+        $y = $block->getPosition()->getY();
+        $z = $block->getPosition()->getZ();
 
         // Activate adjacent redstone components
         $this->activateRedstoneAt($world, $x + 1, $y, $z);
@@ -42,12 +44,12 @@ class RedstoneIntegration extends PluginBase implements Listener {
     /**
      * Activate redstone at given coordinates.
      *
-     * @param mixed $world
+     * @param \pocketmine\world\World $world
      * @param int   $x
      * @param int   $y
      * @param int   $z
      */
-    private function activateRedstoneAt($world, int $x, int $y, int $z): void {
+    private function activateRedstoneAt(\pocketmine\world\World $world, int $x, int $y, int $z): void {
         $block = $world->getBlock(new Vector3($x, $y, $z)); // Get the block at the specified coordinates
 
         // Check if the block is redstone-related (e.g., redstone dust, torch, repeater)
